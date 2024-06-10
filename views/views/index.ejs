@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twilio Fax Server</title>
+</head>
+<body>
+    <h1>Twilio Fax Server</h1>
+    <a href="/settings">Settings</a>
+
+    <h2>Send Fax</h2>
+    <form id="send-fax-form" enctype="multipart/form-data">
+        <label for="from">From:</label>
+        <select id="from" name="from" required>
+            <% twilioPhoneNumbers.forEach(number => { %>
+                <option value="<%= number %>"><%= number %></option>
+            <% }); %>
+        </select>
+        <label for="to">To:</label>
+        <input type="text" id="to" name="to" required>
+        <label for="faxFile">Fax File:</label>
+        <input type="file" id="faxFile" name="faxFile" required>
+        <button type="submit">Send Fax</button>
+    </form>
+
+    <h2>Received Faxes</h2>
+    <ul id="received-faxes">
+        <% faxes.forEach(fax => { %>
+            <li>
+                <p>From: <%= fax.from %></p>
+                <p>To: <%= fax.to %></p>
+                <p>Media: <a href="<%= fax.mediaUrl %>" target="_blank">View Fax</a></p>
+                <p>Date: <%= fax.dateCreated %></p>
+            </li>
+        <% }); %>
+    </ul>
+
+    <h2>Sent Faxes</h2>
+    <ul id="sent-faxes">
+        <% sentFaxes.forEach(fax => { %>
+            <li>
+                <p>From: <%= fax.from %></p>
+                <p>To: <%= fax.to %></p>
+                <p>Media: <a href="<%= fax.mediaUrl %>" target="_blank">View Fax</a></p>
+                <p>Date: <%= fax.dateSent %></p>
+            </li>
+        <% }); %>
+    </ul>
+
+    <script>
+        document.getElementById('send-fax-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append('from', document.getElementById('from').value);
+            formData.append('to', document.getElementById('to').value);
+            formData.append('faxFile', document.getElementById('faxFile').files[0]);
+
+            const response = await fetch('/send-fax', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert('Fax sent with SID: ' + result.sid);
+            } else {
+                alert('Failed to send fax.');
+            }
+        });
+    </script>
+</body>
+</html>
