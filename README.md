@@ -24,3 +24,11 @@ Twilio Fax Manager is a simple application to send and receive faxes using the T
 ```sh
 git clone https://github.com/FlytheWorldNow/TwilioFaxServer.git
 cd TwilioFaxServer
+
+### Step 2:
+```sh
+docker build -t twilio-fax-app .
+
+### Step 3:
+```sh
+docker run -d -p 3000:3000 --name twilio-fax-container twilio-fax-app
