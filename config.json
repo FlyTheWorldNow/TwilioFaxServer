@@ -1,0 +1,9 @@
+{
+  "accountSid": "",
+  "authToken": "",
+  "emailUser": "",
+  "emailPass": "",
+  "toEmail": "",
+  "smsRecipient": "",
+  "twilioPhoneNumbers": []
+}
