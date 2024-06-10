@@ -25,9 +25,9 @@ app.use(session({
 // 文件上传配置
 const upload = multer({ dest: 'uploads/' });
 
-// 用户凭据（示例）
+// 用户凭据（示例，需要修改）
 const adminUsername = 'admin';
-const adminPassword = 'password';
+const adminPassword = 'yourpassword';
 
 // 配置文件路径
 const configPath = path.resolve(__dirname, 'config.json');
