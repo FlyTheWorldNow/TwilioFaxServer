@@ -22,5 +22,5 @@ Twilio Fax Manager is a simple application to send and receive faxes using the T
 ### Step 1: Clone the repository
 
 ```sh
-git clone https://github.com/yourusername/twilio-fax-manager.git
+git clone https://github.com/FlytheWorldNow/twilio-fax-manager.git
 cd twilio-fax-manager
