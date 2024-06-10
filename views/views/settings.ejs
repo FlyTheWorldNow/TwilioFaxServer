@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twilio Fax Server - Settings</title>
+</head>
+<body>
+    <h1>Twilio Fax Server - Settings</h1>
+    <a href="/logout">Logout</a>
+
+    <form id="settings-form">
+        <label for="accountSid">Account SID:</label>
+        <input type="text" id="accountSid" name="accountSid" required>
+        <label for="authToken">Auth Token:</label>
+        <input type="text" id="authToken" name="authToken" required>
+        <label for="emailUser">Email User:</label>
+        <input type="text" id="emailUser" name="emailUser" required>
+        <label for="emailPass">Email Password:</label>
+        <input type="password" id="emailPass" name="emailPass" required>
+        <label for="toEmail">Recipient Email:</label>
+        <input type="email" id="toEmail" name="toEmail" required>
+        <label for="smsRecipient">SMS Recipient:</label>
+        <input type="text" id="smsRecipient" name="smsRecipient" required>
+        <label for="twilioPhoneNumbers">Twilio Phone Numbers (comma separated):</label>
+        <input type="text" id="twilioPhoneNumbers" name="twilioPhoneNumbers" required>
+        <button type="submit">Save Settings</button>
+    </form>
+
+    <script>
+        document.getElementById('settings-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const settings = {
+                accountSid: document.getElementById('accountSid').value,
+                authToken: document.getElementById('authToken').value,
+                emailUser: document.getElementById('emailUser').value,
+                emailPass: document.getElementById('emailPass').value,
+                toEmail: document.getElementById('toEmail').value,
+                smsRecipient: document.getElementById('smsRecipient').value,
+                twilioPhoneNumbers: document.getElementById('twilioPhoneNumbers').value.split(',')
+            };
+
+            const response = await fetch('/api/save-settings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(settings)
+            });
+
+            if (response.ok) {
+                alert('Settings saved successfully!');
+            } else {
+                alert('Failed to save settings.');
+            }
+        });
+
+        // Fetch existing settings and populate the form
+        fetch('/api/settings')
+            .then(response => response.json())
+            .then(settings => {
+                document.getElementById('accountSid').value = settings.accountSid;
+                document.getElementById('authToken').value = settings.authToken;
+                document.getElementById('emailUser').value = settings.emailUser;
+                document.getElementById('emailPass').value = settings.emailPass;
+                document.getElementById('toEmail').value = settings.toEmail;
+                document.getElementById('smsRecipient').value = settings.smsRecipient;
+                document.getElementById('twilioPhoneNumbers').value = settings.twilioPhoneNumbers.join(',');
+            });
+    </script>
+</body>
+</html>
