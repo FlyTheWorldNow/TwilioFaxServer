@@ -1,7 +1,7 @@
 {
-  "name": "twilio-fax-manager",
+  "name": "TwilioFaxServer",
   "version": "1.0.0",
-  "description": "Twilio Fax Manager",
+  "description": "Twilio Fax Server",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
@@ -11,6 +11,9 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "nodemailer": "^6.6.3",
-    "twilio": "^3.61.0"
+    "twilio": "^3.61.0",
+    "axios": "^0.21.1",
+    "multer": "^1.4.2",
+    "express-session": "^1.17.1"
   }
 }
